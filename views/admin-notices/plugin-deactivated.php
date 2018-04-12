@@ -1,0 +1,1 @@
+<div class="error"><p>WooCommerce wallee Subscription Addon<?php _e(' deactivated because it depends on WooCommerce.', 'woocoommerce-wallee'); ?></p></div>
