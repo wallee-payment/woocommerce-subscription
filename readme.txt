@@ -1,9 +1,9 @@
 === WooCommerce wallee Subscription ===
 Contributors: customwebgmbh
 Tags: woocommerce wallee, woocommerce, wallee, payment, e-commerce, webshop, psp, subscription, recurring payment, processing
-Requires at least: 4.4
+Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: Apache 2
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -12,6 +12,15 @@ Plugin to process Woocommerce Subscriptions with wallee.
 == Description ==
 
 This plugin adds support to process WooCommerce Subscription with wallee.
+
+Customer behavior and desires in terms of product consumption have changed in the digital age.
+They’re looking for new ways to engage with businesses. Consumers today have a new set of expectations.
+They want outcomes, not ownership.
+
+
+Please note this plugin enhances the features of the basic wallee WooCommerce Payment Plugin.
+Therefore, it is necessary that you install the this plugin as well. 
+
 
 == Installation ==
 
@@ -25,21 +34,21 @@ This plugin adds support to process WooCommerce Subscription with wallee.
 
 = Automatic installation =
 
-1. Install the plugin via Plugins -> New plugin. Search for 'Woocommerce wallee'.
-2. Activate the 'WooCommerce wallee' plugin through the 'Plugins' menu in WordPress
-3. Set your wallee credentials at WooCommerce -> Settings -> wallee (or use the *Settings* link in the Plugins overview)
-4. You're done, the active payment methods should be visible in the checkout of your webshop.
+1. Install the plugin via Plugins -> New plugin. Search for 'Woocommerce wallee Subscription '.
+2. Activate the 'WooCommerce wallee Subscription' plugin through the 'Plugins' menu in WordPress
+3. You're done. You can now process subscriptions through wallee.
 
 = Manual installation =
 
 1. Unpack the downloaded package.
-2. Upload the directory 'woo-wallee' to the `/wp-content/plugins/` directory
-3. Activate the 'WooCommerce wallee' plugin through the 'Plugins' menu in WordPress
-4. Set your wallee credentials at WooCommerce -> Settings -> wallee (or use the *Settings* link in the Plugins overview)
-5. You're done, the active payment methods should be visible in the checkout of your webshop.
+2. Upload the directory 'woo-wallee-subscription' to the `/wp-content/plugins/` directory
+3. Activate the 'WooCommerce wallee Subscription' plugin through the 'Plugins' menu in WordPress
+4. You're done. You can now process subscriptions through wallee.
+
+
 
 == Changelog ==
 
-= 1.0.0 - April 11, 2018 =
+= 1.0.1 - July 05, 2018 =
 
-* Initial release.
+* Localization - Added german translations

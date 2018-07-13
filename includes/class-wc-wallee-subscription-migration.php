@@ -2,7 +2,14 @@
 if (!defined('ABSPATH')) {
 	exit();
 }
-
+/**
+ * wallee WooCommerce
+ *
+ * This WooCommerce plugin enables to process payments with wallee (https://www.wallee.com).
+ *
+ * @author customweb GmbH (http://www.customweb.com/)
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache Software License (ASL 2.0)
+ */
 /**
  * This class handles the database setup and migration.
  */
@@ -73,31 +80,31 @@ class WC_Wallee_Subscription_Migration {
 		$errors = array();
 		
 		if (!is_plugin_active('woo-wallee/woocommerce-wallee.php')){
-		    $errors[] = sprintf(__("Woocommerce wallee %s+ has to be active.", "woocommerce-wallee-subscription-subscription"), WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION);
+		    $errors[] = sprintf(__("Woocommerce wallee %s+ has to be active.", "woo-wallee-subscription"), WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION);
 		}
 		else{
 			$base_module_data = get_plugin_data(WP_PLUGIN_DIR .'/woo-wallee/woocommerce-wallee.php', false, false);
 			
 			if (version_compare ($base_module_data['Version'] , WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION, '<')){
-			    $errors[] = sprintf(__("Woocommerce wallee %s+ is required. (You're running version %s)", "woocommerce-wallee-subscription"), WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION, $base_module_data['Version']);
+			    $errors[] = sprintf(__("Woocommerce wallee %s+ is required. (You're running version %s)", "woo-wallee-subscription"), WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION, $base_module_data['Version']);
 			}
 		}
 		
 		if (!is_plugin_active('woocommerce-subscriptions/woocommerce-subscriptions.php')){
-		    $errors[] = sprintf(__("Woocommerce Subscriptions %s+ has to be active.", "woocommerce-wallee-subscription"), WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION);
+		    $errors[] = sprintf(__("Woocommerce Subscriptions %s+ has to be active.", "woo-wallee-subscription"), WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION);
 		}
 		else{
 		    $woocommerce_subscriptions_data = get_plugin_data(WP_PLUGIN_DIR .'/woocommerce/woocommerce.php', false, false);
 		    
 		    if (version_compare ($woocommerce_subscriptions_data['Version'] , WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION, '<')){
-		        $errors[] = sprintf(__("Woocommerce Subscription %s+ is required. (You're running version %s)", "woocommerce-wallee-subscription"), WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION, $woocommerce_subscriptions_data['Version']);
+		        $errors[] = sprintf(__("Woocommerce Subscriptions %s+ is required. (You're running version %s)", "woo-wallee-subscription"), WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION, $woocommerce_subscriptions_data['Version']);
 		    }
 		}
 		
 		if(!empty($errors)){
-			$title = __('Could not activate plugin', 'woocommerce-wallee-subscription').' WooCommerce wallee Subscription Addon';
+			$title = __('Could not activate plugin WooCommerce wallee Subscription', 'woo-wallee-subscription');
 			$message = '<h1><strong>'.$title.'</strong></h1><br/>'.
-					'<h3>'.__('Please check the following requirements before activating:', 'woocommerce-wallee-subscription').'</h3>'.
+					'<h3>'.__('Please check the following requirements before activating:', 'woo-wallee-subscription').'</h3>'.
 					'<ul><li>'.
 					implode('</li><li>', $errors).
 					'</li></ul>';

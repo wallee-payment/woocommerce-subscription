@@ -2,18 +2,18 @@
 /**
  * Plugin Name: WooCommerce wallee Subscription
  * Plugin URI: https://wordpress.org/plugins/woo-wallee-subscription
- * Description: Addon to processs WooCommerce subscriptions with wallee
- * Version: 1.0.0
+ * Description: Addon to processs WooCommerce Subscriptions with wallee
+ * Version: 1.0.1
  * License: Apache2
  * License URI: http://www.apache.org/licenses/LICENSE-2.0
  * Author: customweb GmbH
  * Author URI: https://www.customweb.com
- * Requires at least: 4.4
- * Tested up to: 4.9
+ * Requires at least: 4.7
+ * Tested up to: 4.9.7
  * WC requires at least: 3.0.0
- * WC tested up to: 3.3.4
+ * WC tested up to: 3.4.4
  *
- * Text Domain: woocommerce-wallee-subscription
+ * Text Domain: woo-wallee-subscription
  * Domain Path: /languages/
  *
  */
@@ -36,7 +36,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
          *
          * @var string
          */
-        private $version = '1.0.0';
+        private $version = '1.0.1';
 
         /**
          * The single instance of the class.
@@ -172,14 +172,15 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
          * Note: the first-loaded translation file overrides any following ones if the same translation is present.
          *
          * Locales found in:
-         * - WP_LANG_DIR/woocommerce-wallee/woocommerce-wallee-LOCALE.mo
+         * - WP_LANG_DIR/woo-wallee-subscription/woo-wallee-subscription-LOCALE.mo
          */
         public function load_plugin_textdomain()
         {
-            $locale = apply_filters('plugin_locale', get_locale(), 'woocommerce-wallee-subscription');
+            $locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+            $locale = apply_filters('plugin_locale', $locale, 'woo-wallee-subscription');
             
-            load_textdomain('woocommerce-wallee-subscription', WP_LANG_DIR . '/woocommerce-wallee/woocommerce-wallee-subscription' . $locale . '.mo');
-            load_plugin_textdomain('woocommerce-wallee-subscription', false, plugin_basename(dirname(__FILE__)) . '/languages');
+            load_textdomain('woo-wallee-subscription', WP_LANG_DIR . '/woo-wallee/woo-wallee-subscription' . $locale . '.mo');
+            load_plugin_textdomain('woo-wallee-subscription', false, plugin_basename(dirname(__FILE__)) . '/languages');
         }
 
         /**
@@ -331,7 +332,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
                 $line_item = new \Wallee\Sdk\Model\LineItemCreate();
                 $line_item->setAmountIncludingTax(0);
                 $line_item->setQuantity(1);
-                $line_item->setName(__('Payment Method Change', 'woocommerce-wallee-subscription'));
+                $line_item->setName(__('Payment Method Change', 'woo-wallee-subscription'));
                 $line_item->setShippingRequired(false);
                 $line_item->setSku('paymentmethodchange');
                 $line_item->setTaxes(array());

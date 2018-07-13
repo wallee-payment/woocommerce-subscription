@@ -3,7 +3,14 @@
 if (!defined('ABSPATH')) {
 	exit();
 }
-
+/**
+ * wallee WooCommerce
+ *
+ * This WooCommerce plugin enables to process payments with wallee (https://www.wallee.com).
+ *
+ * @author customweb GmbH (http://www.customweb.com/)
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache Software License (ASL 2.0)
+ */
 /**
  * This class implements the wallee subscription gateways
  */
@@ -24,11 +31,11 @@ class WC_Wallee_Subscription_Gateway {
         $token_space_id =  get_post_meta( $order->get_id(), '_wallee_subscription_space_id', true );
         $token_id =  get_post_meta( $order->get_id(), '_wallee_subscription_token_id', true );
         if(empty($token_space_id) || $token_space_id != get_option(WooCommerce_Wallee::CK_SPACE_ID)){
-            $order->update_status('failed', __('The token space and the configured space are not equal.','woocommerce-wallee-subscription-subscription'));
+            $order->update_status('failed', __('The token space and the configured space are not equal.','woo-wallee-subscription'));
             return;
         }
         if(empty($token_id)){
-            $order->update_status('failed', __('There is no token associated with this subscription.','woocommerce-wallee-subscription-subscription'));
+            $order->update_status('failed', __('There is no token associated with this subscription.','woo-wallee-subscription'));
             return;
         }
         $transaction_service = WC_Wallee_Subscription_Service_Transaction::instance();
@@ -50,7 +57,7 @@ class WC_Wallee_Subscription_Gateway {
         $order->delete_meta_data('_wc_wallee_restocked');
         }
         catch(Exception $e){
-            $order->update_status('failed', $e->getMessage() ,'woocommerce-wallee-subscription-subscription');
+            $order->update_status('failed', $e->getMessage() ,'woo-wallee-subscription');
             WooCommerce_Wallee_Subscription::instance()->log($e->getMessage().$e->getTraceAsString());
             return;
         }
@@ -76,13 +83,13 @@ class WC_Wallee_Subscription_Gateway {
         
         if ( $this->gateway->id === $payment_method_id ) {            
             if ( ! isset( $payment_meta['post_meta']['_wallee_subscription_space_id']['value'] ) || empty( $payment_meta['post_meta']['_wallee_subscription_space_id']['value'] ) ) {
-                throw new Exception( sprintf(__('The %s value is required.', 'woocommerce-wallee-subscription-subscription'), 'wallee Space Id'));
+                throw new Exception( __('The wallee Space Id value is required.', 'woo-wallee-subscription'));
             }
             elseif ( $payment_meta['post_meta']['_wallee_subscription_space_id']['value'] !=  get_option(WooCommerce_Wallee::CK_SPACE_ID)) {
-                throw new Exception( sprintf(__('The %s needs to be in the same space as configured in the main configuration.', 'woocommerce-wallee-subscription-subscription'), '_wallee_subscription_space_id'));
+                throw new Exception( __('The wallee Space Id needs to be in the same space as configured in the main configuration.', 'woo-wallee-subscription'));
             }
             if ( ! isset( $payment_meta['post_meta']['_wallee_subscription_token_id']['value'] ) || empty( $payment_meta['post_meta']['_wallee_subscription_token_id']['value'] ) ) {
-                throw new Exception( sprintf(__('The %s value is required.', 'woocommerce-wallee-subscription-subscription'), 'wallee Token Id'));
+                throw new Exception( __('The wallee Token Id value is required.', 'woo-wallee-subscription'));
             }
         }        
     }

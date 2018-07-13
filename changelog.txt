@@ -2,3 +2,7 @@
 
 * Initial release.
 
+= 1.0.1 - July 05, 2018 =
+
+* Localization - Added german translations
+
