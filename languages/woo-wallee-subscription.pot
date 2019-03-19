@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce wallee Subscription\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-05 13:56+0000\n"
+"POT-Creation-Date: 2019-03-19 15:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,67 +13,67 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: woocommerce-wallee-subscription.php:335
+#: woocommerce-wallee-subscription.php:395
 msgid "Payment Method Change"
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-migration.php:78
+#: includes/class-wc-wallee-subscription-migration.php:83
 #, php-format
 msgid "Woocommerce wallee %s+ has to be active."
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-migration.php:84
+#: includes/class-wc-wallee-subscription-migration.php:89
 #, php-format
 msgid "Woocommerce wallee %s+ is required. (You're running version %s)"
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-migration.php:89
+#: includes/class-wc-wallee-subscription-migration.php:94
 #, php-format
 msgid "Woocommerce Subscriptions %s+ has to be active."
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-migration.php:95
+#: includes/class-wc-wallee-subscription-migration.php:100
 #, php-format
 msgid "Woocommerce Subscriptions %s+ is required. (You're running version %s)"
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-migration.php:100
+#: includes/class-wc-wallee-subscription-migration.php:105
 msgid "Could not activate plugin WooCommerce wallee Subscription"
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-migration.php:102
+#: includes/class-wc-wallee-subscription-migration.php:107
 msgid "Please check the following requirements before activating:"
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-gateway.php:29
+#: includes/class-wc-wallee-subscription-gateway.php:58
 msgid "The token space and the configured space are not equal."
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-gateway.php:33
+#: includes/class-wc-wallee-subscription-gateway.php:62
 msgid "There is no token associated with this subscription."
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-gateway.php:81
+#: includes/class-wc-wallee-subscription-gateway.php:152
 msgid "The wallee Space Id value is required."
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-gateway.php:84
+#: includes/class-wc-wallee-subscription-gateway.php:155
 msgid ""
 "The wallee Space Id needs to be in the same space as configured in the main "
 "configuration."
 msgstr ""
 
-#: includes/class-wc-wallee-subscription-gateway.php:87
+#: includes/class-wc-wallee-subscription-gateway.php:158
 msgid "The wallee Token Id value is required."
 msgstr ""
 
-#: views/admin-notices/migration-failed.php:10
+#: views/admin-notices/migration-failed.php:15
 msgid ""
 "There was an issue executing the migration for WooCommerce wallee "
 "Subscription."
 msgstr ""
 
-#: views/admin-notices/plugin-deactivated.php:9
+#: views/admin-notices/plugin-deactivated.php:14
 msgid ""
 "WooCommerce wallee Subscription deactivated because one of its dependencies "
 "is no longer active."
@@ -85,4 +85,16 @@ msgstr ""
 
 #. Description of the plugin
 msgid "Addon to processs WooCommerce Subscriptions with wallee"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://wordpress.org/plugins/woo-wallee-subscription"
+msgstr ""
+
+#. Author of the plugin
+msgid "customweb GmbH"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.customweb.com"
 msgstr ""

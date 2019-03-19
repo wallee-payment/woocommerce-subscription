@@ -3,15 +3,15 @@
  * Plugin Name: WooCommerce wallee Subscription
  * Plugin URI: https://wordpress.org/plugins/woo-wallee-subscription
  * Description: Addon to processs WooCommerce Subscriptions with wallee
- * Version: 1.0.1
+ * Version: 1.0.2
  * License: Apache2
  * License URI: http://www.apache.org/licenses/LICENSE-2.0
  * Author: customweb GmbH
  * Author URI: https://www.customweb.com
  * Requires at least: 4.7
- * Tested up to: 4.9.7
+ * Tested up to: 5.1.1
  * WC requires at least: 3.0.0
- * WC tested up to: 3.4.4
+ * WC tested up to: 3.5.6
  *
  * Text Domain: woo-wallee-subscription
  * Domain Path: /languages/
@@ -36,7 +36,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
          *
          * @var string
          */
-        private $version = '1.0.1';
+        private $version = '1.0.2';
 
         /**
          * The single instance of the class.
@@ -134,8 +134,8 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             $this->define('WC_WALLEE_SUBSCRIPTION_ABSPATH', dirname(__FILE__) . '/');
             $this->define('WC_WALLEE_SUBSCRIPTION_PLUGIN_BASENAME', plugin_basename(__FILE__));
             $this->define('WC_WALLEE_SUBSCRIPTION_VERSION', $this->version);
-            $this->define('WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION', '1.1.0');
-            $this->define('WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION', '2.2');
+            $this->define('WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION', '1.2.0');
+            $this->define('WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION', '2.5');
         }
 
         /**
@@ -232,9 +232,6 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
                 $this,
                 'update_transaction_info'
             ), 10,3);
-            add_filter('wc_wallee_is_order_pay_endpoint', array(
-                $this, 'is_order_pay_endpoint'
-            ), 10, 2);
             add_filter('wc_wallee_confirmed_status', array(
                 $this, 'ignore_status_update_for_subscription'
             ), 10, 2);
@@ -259,6 +256,27 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             add_filter('woocommerce_subscriptions_is_failed_renewal_order', array(
                 $this, 'check_failed_renewal_order'
             ), 10, 3);
+
+            //Handle order to cart creation for subscriptions
+            add_filter('wcs_before_renewal_setup_cart_subscriptions', array(
+                $this, 'before_renewal_setup_cart'
+            ), 10, 2);            
+            add_filter('wcs_before_parent_order_setup_cart', array(
+                $this, 'before_renewal_setup_cart'
+            ), 10, 2); 
+            add_filter('wcs_after_renewal_setup_cart_subscriptions', array(
+                $this, 'after_renewal_setup_cart'
+            ), 10, 2);            
+            add_filter('wcs_after_parent_order_setup_cart', array(
+                $this, 'after_renewal_setup_cart'
+            ), 10, 2);     
+            add_filter('wc_wallee_is_method_available', array(
+                $this, 'method_available_for_cart_renewal'
+            ), 10, 1);
+            
+            add_filter('wc_wallee_success_url', array(
+                $this, 'update_succes_url'
+            ), 10, 2);        
             
         }
 
@@ -274,29 +292,10 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
                 'subscription_date_changes',
                 'subscription_payment_method_change',
                 'subscription_payment_method_change_customer',
-                'subscription_payment_method_change_admin'
+                'subscription_payment_method_change_admin',
+                'subscription_payment_method_delayed_change'
             ));
             $subscription_gateway = new WC_Wallee_Subscription_Gateway($gateway);
-            add_action('woocommerce_scheduled_subscription_payment_' . $gateway->id, array(
-                $subscription_gateway,
-                'process_scheduled_subscription_payment'
-            ), 10, 2);
-            //Handle Admin Token Setting
-            add_filter('woocommerce_subscription_payment_meta', array(
-                $subscription_gateway,
-                'add_subscription_payment_meta'
-            ),10, 2);
-            add_action('woocommerce_subscription_validate_payment_meta', array(
-                $subscription_gateway,
-                'validate_subscription_payment_meta'
-            ),10, 2);
-            //Handle Pay Failed Renewal
-            add_action('woocommerce_subscription_failing_payment_method_updated_' . $gateway->id, array(
-                $this,
-                'process_subscription_failing_payment_method_updated'
-            ), 10, 2);
-            
-            
             return $gateway;
         }
         
@@ -304,7 +303,67 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             if(wcs_order_contains_subscription($order, array( 'parent', 'resubscribe', 'switch', 'renewal'))){
                 $GLOBALS['_wc_wallee_subscription_fulfill'] = true;
             }
+            if ( wcs_is_subscription( $order ) && $this->is_transaction_method_change($transaction)) {
+                $gateway = wc_get_payment_gateway_by_order($order);
+                
+                $meta_data = array(
+                    'post_meta' => array(
+                        '_wallee_subscription_space_id' => array(
+                            'value' =>  $transaction->getLinkedSpaceId(),
+                            'label' => 'wallee Space Id'
+                        ),
+                        '_wallee_subscription_token_id' => array(
+                            'value' => $transaction->getToken()->getId(),
+                            'label' => 'wallee Token Id'
+                        ),
+                    ),
+                );
+                
+                WC_Subscriptions_Change_Payment_Gateway::update_payment_method( $order, $gateway->id, $meta_data);
+                if (WC_Subscriptions_Change_Payment_Gateway::will_subscription_update_all_payment_methods( $order ) ) {
+                    WC_Subscriptions_Change_Payment_Gateway::update_all_payment_methods_from_subscription( $order, $gateway->id);
+                }
+            }
         }
+        
+        private function is_transaction_method_change(\Wallee\Sdk\Model\Transaction $transaction){
+            $line_items = $transaction->getLineItems();
+            if(count($line_items) != 1){
+                return false;
+            }
+            $line_item = current($line_items);
+            /* @var  \Wallee\Sdk\Model\LineItem $line_item */
+            if($line_item->getSku() == 'paymentmethodchange'){
+                return true;
+            }
+            return false;
+        }
+        
+        //Subscriptions creates a checkout instead of using the order to pay.
+        //The following function mark our method as available.
+        //This also ensures we do not create an transaction for such an order
+        public function before_renewal_setup_cart($subscriptions, $order){
+            $GLOBALS['_wc_wallee_renewal_cart_setup'] = true;
+        }
+        
+        public function after_renewal_setup_cart($subscriptions, $order){
+            $GLOBALS['_wc_wallee_renewal_cart_setup'] = false;
+        }
+        public function method_available_for_cart_renewal($available){
+            if(isset($GLOBALS['_wc_wallee_renewal_cart_setup']) && $GLOBALS['_wc_wallee_renewal_cart_setup']){
+                return true;
+            }
+            return $available;
+        }
+        
+        public function update_succes_url($url, $order){
+            if(wcs_is_subscription($order)){
+                return $order->get_view_order_url();
+            }
+            return $url;
+        }
+        
+        
         
         public function add_valid_order_statuses_for_subscription_completion($statuses, $order = null){
             if(isset($GLOBALS['_wc_wallee_subscription_fulfill'])){
@@ -313,6 +372,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             }
             return $statuses;
         }
+        
 
         public function update_transaction_from_session(\Wallee\Sdk\Model\AbstractTransactionPending $transaction)
         {
@@ -327,7 +387,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             if(wcs_order_contains_subscription($order, array( 'parent', 'resubscribe', 'switch', 'renewal'))){
                 $transaction->setTokenizationMode(\Wallee\Sdk\Model\TokenizationnMode::FORCE_CREATION_WITH_ONE_CLICK_PAYMENT);
             }
-            if(wcs_is_subscription($order->get_id())){
+            if(WC_Subscriptions_Change_Payment_Gateway::$is_request_to_change_payment){
                 //It is a method change for a subscription -> zero transaction
                 $line_item = new \Wallee\Sdk\Model\LineItemCreate();
                 $line_item->setAmountIncludingTax(0);
@@ -354,8 +414,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
                 $subscriptions = wcs_get_subscriptions_for_order($order, array('parent', 'switch'));                
                 foreach ($subscriptions as $id => $subscription) {
                     $subscription->add_meta_data('_wallee_subscription_space_id', $transaction->getLinkedSpaceId(), true);
-                    $subscription->add_meta_data('_wallee_subscription_token_id', $transaction->getToken()
-                        ->getId(),true);
+                    $subscription->add_meta_data('_wallee_subscription_token_id', $transaction->getToken()->getId(),true);
                     $subscription->save();
                 }
             }
@@ -366,10 +425,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             }
         }
 
-        public function process_subscription_failing_payment_method_updated($subscription, $renewal_order ){
-            update_post_meta( $subscription->get_id(), '_wallee_subscription_space_id', $renewal_order->get_meta('_wallee_subscription_space_id',true));
-            update_post_meta( $subscription->get_id(), '_wallee_subscription_token_id', $renewal_order->get_meta('_wallee_subscription_token_id',true));
-        }
+
         
         public function update_transaction_info(WC_Wallee_Entity_Transaction_Info $info, \Wallee\Sdk\Model\Transaction $transaction, WC_Order $order){
             if(wcs_is_subscription($order->get_id())){
@@ -380,13 +436,8 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             return $info;
         }
         
-        public function is_order_pay_endpoint($is_endpoint, $order_id){
-            if(wcs_is_subscription($order_id)){
-                return true;
-            }
-            return $is_endpoint;
-        }
-        
+
+              
         /**
          * Do not change the status for subscriptions, this is done by modifying the corresponding orders
          * @param string $status
@@ -425,5 +476,6 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             return $is_failed_renewal_order;
         }
     }
+     
 }
 WooCommerce_Wallee_Subscription::instance();

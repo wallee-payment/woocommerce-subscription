@@ -66,10 +66,11 @@ class WC_Wallee_Subscription_Admin {
 			// Deactivate myself
 		    deactivate_plugins(WC_WALLEE_SUBSCRIPTION_PLUGIN_BASENAME);
 			add_action('admin_notices', array(
-				'WC_Wallee_Admin_Notices',
+				'WC_Wallee_Subscription_Admin_Notices',
 				'plugin_deactivated'
 			));
 		}
+		
 	}
 	
 }

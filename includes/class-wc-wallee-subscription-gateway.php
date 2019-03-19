@@ -24,6 +24,30 @@ class WC_Wallee_Subscription_Gateway {
     
     public function __construct(WC_Wallee_Gateway $gateway){
         $this->gateway = $gateway;
+        
+        add_action('woocommerce_scheduled_subscription_payment_' . $gateway->id, array(
+            $this,
+            'process_scheduled_subscription_payment'
+        ), 10, 2);
+        //Handle Admin Token Setting
+        add_filter('woocommerce_subscription_payment_meta', array(
+            $this,
+            'add_subscription_payment_meta'
+        ),10, 2);
+        add_action('woocommerce_subscription_validate_payment_meta', array(
+            $this,
+            'validate_subscription_payment_meta'
+        ),10, 2);
+        //Handle customer payment method change
+        add_filter( 'woocommerce_subscriptions_update_payment_via_pay_shortcode',  array(
+            $this,
+            'maybe_dont_update_payment_method'
+        ), 10, 3 );
+        //Handle Pay Failed Renewal
+        add_action('woocommerce_subscription_failing_payment_method_updated_' . $gateway->id, array(
+            $this,
+            'process_subscription_failing_payment_method_updated'
+        ), 10, 2);
     }
     
     public function process_scheduled_subscription_payment($amount_to_charge, WC_Order $order){
@@ -63,6 +87,48 @@ class WC_Wallee_Subscription_Gateway {
         }
     }
     
+    
+    public function maybe_dont_update_payment_method( $update, $new_payment_method, $subscription ) {
+        if ( $this->gateway->id == $new_payment_method ) {
+            $update = false;
+            
+            add_filter('wc_wallee_gateway_result_send_json', array(
+                $this, 'gateway_result_send_json'
+            ), 10, 2);
+        }        
+        return $update;
+    }
+    
+    public function gateway_result_send_json($send, $order_id){
+        
+        add_filter( 'woocommerce_subscriptions_process_payment_for_change_method_via_pay_shortcode',  array(
+            $this,
+            'store_gateway_result_in_globals'
+        ), -10, 2 );
+        add_filter( 'wp_redirect',  array(
+            $this,
+            'create_json_response'
+        ), -10, 2 );
+        return false;
+    }
+    
+    public function store_gateway_result_in_globals($result, $subscription){
+        if(isset($result['wallee'])){
+            $GLOBALS['_wc_wallee_subscription_gateway_result'] = $result;
+            return array('result' => $result['result'], 'redirect' => 'wc_wallee_subscription_redirect');
+        }
+        return $result;
+    }
+    
+    public function create_json_response($location, $status){
+        if($location == 'wc_wallee_subscription_redirect' && isset($GLOBALS['_wc_wallee_subscription_gateway_result'])){
+            wp_send_json( $GLOBALS['_wc_wallee_subscription_gateway_result'] );
+            exit;
+        }
+        return $location;
+    }
+    
+    
     public function add_subscription_payment_meta($payment_meta, $subscription){
         $payment_meta[ $this->gateway->id ] = array(
             'post_meta' => array(
@@ -94,5 +160,9 @@ class WC_Wallee_Subscription_Gateway {
         }        
     }
     
+    public function process_subscription_failing_payment_method_updated($subscription, $renewal_order ){
+        update_post_meta( $subscription->get_id(), '_wallee_subscription_space_id', $renewal_order->get_meta('_wallee_subscription_space_id',true));
+        update_post_meta( $subscription->get_id(), '_wallee_subscription_token_id', $renewal_order->get_meta('_wallee_subscription_token_id',true));
+    }    
 
 }
