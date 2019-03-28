@@ -3,7 +3,7 @@ Contributors: customwebgmbh
 Tags: woocommerce wallee, woocommerce, wallee, payment, e-commerce, webshop, psp, subscription, recurring payment, processing
 Requires at least: 4.7
 Tested up to: 5.1.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: Apache 2
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -49,6 +49,6 @@ Therefore, it is necessary that you install the this plugin as well.
 
 == Changelog ==
 
-= 1.0.2 - March 19, 2019 =
+= 1.0.3 - March 28, 2019 =
 
-* Fix - WooCommerce Subscription > 2.5.0
+* Fix - Issue with payment method change

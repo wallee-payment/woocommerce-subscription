@@ -149,8 +149,6 @@ class WC_Wallee_Subscription_Migration {
 	 * @return string[]
 	 */
 	public static function wpmu_drop_tables($tables){
-		global $wpdb;
-				
 		return $tables;
 	}
 
@@ -215,7 +213,7 @@ class WC_Wallee_Subscription_Migration {
 			// Check the latest stable version and ignore trunk.
 			if ($version === $new_version && version_compare(WC_WALLEE_VERSION, $version, '<')) {
 				$upgrade_notice .= '<div class="plugin_upgrade_notice">';
-				foreach ($notices as $index => $line) {
+				foreach ($notices as $line) {
 					$upgrade_notice .= wp_kses_post(preg_replace('~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line));
 				}
 				$upgrade_notice .= '</div> ';

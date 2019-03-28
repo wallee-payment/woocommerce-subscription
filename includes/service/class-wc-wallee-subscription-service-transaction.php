@@ -44,8 +44,8 @@ class WC_Wallee_Subscription_Service_Transaction extends WC_Wallee_Service_Trans
 	            $pending_transaction->setId($transaction->getId());
 	            $pending_transaction->setVersion($transaction->getVersion());
 	            $pending_transaction->setToken($token_id);
-	            $this->assemble_order_transaction_data($order, $create_transaction);
-	            $this->set_modified_order_line_items($order, $order_total, $create_transaction);
+	            $this->assemble_order_transaction_data($order, $pending_transaction);
+	            $this->set_modified_order_line_items($order, $order_total, $pending_transaction);
 	            return $this->get_transaction_service()->update($transaction->getLinkedSpaceId(), $pending_transaction);
 	        }
 	        catch (\Wallee\Sdk\VersioningException $e) {

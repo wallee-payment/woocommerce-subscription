@@ -10,3 +10,7 @@
 
 * Fix - WooCommerce Subscription > 2.5.0
 
+= 1.0.3 - March 28, 2019 =
+
+* Fix - Issue with payment method change
+

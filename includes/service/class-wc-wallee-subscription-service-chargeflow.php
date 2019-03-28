@@ -21,10 +21,10 @@ class WC_Wallee_Subscription_Service_ChargeFlow extends WC_Wallee_Service_Abstra
      * @return \Wallee\Sdk\Service\ChargeFlowService
      */
     protected function get_chargeflow_service(){
-        if ($this->$chargeflow_service === null) {
-            $this->$chargeflow_service = new \Wallee\Sdk\Service\ChargeFlowService(WC_Wallee_Helper::instance()->get_api_client());
+        if ($this->chargeflow_service === null) {
+            $this->chargeflow_service = new \Wallee\Sdk\Service\ChargeFlowService(WC_Wallee_Helper::instance()->get_api_client());
         }
-        return $this->$chargeflow_service;
+        return $this->chargeflow_service;
     }
     
     public function apply_chargeflow_on_transaction($space_id, $transaction_id){
