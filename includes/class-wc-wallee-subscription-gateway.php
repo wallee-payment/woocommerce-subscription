@@ -79,6 +79,7 @@ class WC_Wallee_Subscription_Gateway {
             $transaction = $transaction_service->process_transaction_without_user_interaction($token_space_id, $create_transaction->getId());
         }
         
+        $order->add_meta_data('_wallee_gateway_id', $this->gateway->id, true);
         $order->add_meta_data('_wallee_linked_ids', array('sapce_id' =>  $transaction->getLinkedSpaceId(), 'transaction_id' => $transaction->getId()), false);
         $order->delete_meta_data('_wc_wallee_restocked');
         }

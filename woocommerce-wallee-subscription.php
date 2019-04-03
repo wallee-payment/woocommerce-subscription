@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce wallee Subscription
  * Plugin URI: https://wordpress.org/plugins/woo-wallee-subscription
  * Description: Addon to processs WooCommerce Subscriptions with wallee
- * Version: 1.0.3
+ * Version: 1.0.4
  * License: Apache2
  * License URI: http://www.apache.org/licenses/LICENSE-2.0
  * Author: customweb GmbH
@@ -36,7 +36,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
          *
          * @var string
          */
-        private $version = '1.0.3';
+        private $version = '1.0.4';
 
         /**
          * The single instance of the class.
@@ -134,7 +134,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             $this->define('WC_WALLEE_SUBSCRIPTION_ABSPATH', dirname(__FILE__) . '/');
             $this->define('WC_WALLEE_SUBSCRIPTION_PLUGIN_BASENAME', plugin_basename(__FILE__));
             $this->define('WC_WALLEE_SUBSCRIPTION_VERSION', $this->version);
-            $this->define('WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION', '1.2.2');
+            $this->define('WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION', '1.2.4');
             $this->define('WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION', '2.5');
         }
 
@@ -284,7 +284,10 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             ), 10, 1);
             
             add_filter('wc_wallee_success_url', array(
-                $this, 'update_succes_url'
+                $this, 'update_success_url'
+            ), 10, 2);
+            add_filter('wc_wallee_checkout_failure_url', array(
+                $this, 'update_failure_url'
             ), 10, 2);
                         
         }
@@ -304,6 +307,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
                 'subscription_payment_method_change_admin',
                 'subscription_payment_method_delayed_change'
             ));
+            //Create Subscription gateway and register hooks/filters
             new WC_Wallee_Subscription_Gateway($gateway);
             return $gateway;
         }
@@ -311,27 +315,6 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
         public function fulfill_in_progress(\Wallee\Sdk\Model\Transaction $transaction, $order){
             if(wcs_order_contains_subscription($order, array( 'parent', 'resubscribe', 'switch', 'renewal'))){
                 $GLOBALS['_wc_wallee_subscription_fulfill'] = true;
-            }
-            if ( wcs_is_subscription( $order ) && $this->is_transaction_method_change($transaction)) {
-                $gateway = wc_get_payment_gateway_by_order($order);
-                
-                $meta_data = array(
-                    'post_meta' => array(
-                        '_wallee_subscription_space_id' => array(
-                            'value' =>  $transaction->getLinkedSpaceId(),
-                            'label' => 'wallee Space Id'
-                        ),
-                        '_wallee_subscription_token_id' => array(
-                            'value' => $transaction->getToken()->getId(),
-                            'label' => 'wallee Token Id'
-                        ),
-                    ),
-                );
-                
-                WC_Subscriptions_Change_Payment_Gateway::update_payment_method( $order, $gateway->id, $meta_data);
-                if (WC_Subscriptions_Change_Payment_Gateway::will_subscription_update_all_payment_methods( $order ) ) {
-                    WC_Subscriptions_Change_Payment_Gateway::update_all_payment_methods_from_subscription( $order, $gateway->id);
-                }
             }
         }
         
@@ -365,13 +348,26 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             return $available;
         }
         
-        public function update_succes_url($url, $order){
+        public function update_success_url($url, $order){
             if(wcs_is_subscription($order)){
                 return $order->get_view_order_url();
             }
             return $url;
         }
         
+        
+        public function update_failure_url($url, $order){
+            if(wcs_is_subscription($order)){
+                wc_clear_notices();
+                $msg = WC()->session->get( 'wallee_failure_message',  null );
+                if(!empty($msg)){
+                    WooCommerce_Wallee::instance()->add_notice((string) $msg, 'error');
+                    WC()->session->set('wallee_failure_message',  null );
+                }                
+                return $order->get_view_order_url();
+            }
+            return $url;
+        }
         
         
         public function add_valid_order_statuses_for_subscription_completion($statuses, $order = null){
@@ -444,6 +440,28 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
                 $order->add_meta_data('_wallee_subscription_token_id', $transaction->getToken()->getId(),true);
                 $order->save();
             }
+            
+            if ( wcs_is_subscription( $order ) && $this->is_transaction_method_change($transaction)) {
+                $gateway_id = $order->get_meta('_wallee_gateway_id', true, 'edit');
+                $meta_data = array(
+                    'post_meta' => array(
+                        '_wallee_subscription_space_id' => array(
+                            'value' =>  $transaction->getLinkedSpaceId(),
+                            'label' => 'wallee Space Id'
+                        ),
+                        '_wallee_subscription_token_id' => array(
+                            'value' => $transaction->getToken()->getId(),
+                            'label' => 'wallee Token Id'
+                        ),
+                    ),
+                );
+                
+                WC_Subscriptions_Change_Payment_Gateway::update_payment_method( $order, $gateway_id, $meta_data);
+                if (WC_Subscriptions_Change_Payment_Gateway::will_subscription_update_all_payment_methods( $order ) ) {
+                    WC_Subscriptions_Change_Payment_Gateway::update_all_payment_methods_from_subscription( $order, $gateway_id);
+                }
+            }
+            
         }
 
         

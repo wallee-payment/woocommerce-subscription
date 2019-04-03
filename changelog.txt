@@ -14,3 +14,7 @@
 
 * Fix - Issue with payment method change
 
+= 1.0.4 - April 01, 2019 =
+
+* Tweak - Handling of customer returning to shop, after offsite method change
+
