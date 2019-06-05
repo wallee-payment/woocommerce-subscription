@@ -24,6 +24,8 @@ class WC_Wallee_Subscription_Service_Transaction extends WC_Wallee_Service_Trans
 	    $create_transaction->setToken($token_id);
 	    $this->assemble_order_transaction_data($order, $create_transaction);
 	    $this->set_modified_order_line_items($order, $order_total, $create_transaction);
+	    
+	    $create_transaction = apply_filters('wc_wallee_subscription_create_transaction', $create_transaction, $order);
 	    $transaction = $this->get_transaction_service()->create($space_id, $create_transaction);
 	    $this->update_transaction_info($transaction, $order);
 	    return $transaction;
@@ -46,6 +48,7 @@ class WC_Wallee_Subscription_Service_Transaction extends WC_Wallee_Service_Trans
 	            $pending_transaction->setToken($token_id);
 	            $this->assemble_order_transaction_data($order, $pending_transaction);
 	            $this->set_modified_order_line_items($order, $order_total, $pending_transaction);
+	            $pending_transaction = apply_filters('wc_wallee_subscription_update_transaction', $pending_transaction, $order);
 	            return $this->get_transaction_service()->update($transaction->getLinkedSpaceId(), $pending_transaction);
 	        }
 	        catch (\Wallee\Sdk\VersioningException $e) {

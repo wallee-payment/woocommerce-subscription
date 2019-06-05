@@ -18,3 +18,7 @@
 
 * Tweak - Handling of customer returning to shop, after offsite method change
 
+= 1.0.5 - June 05, 2019 =
+
+* Dev - Added filters to modify transaction
+

@@ -2,8 +2,8 @@
 Contributors: customwebgmbh
 Tags: woocommerce wallee, woocommerce, wallee, payment, e-commerce, webshop, psp, subscription, recurring payment, processing
 Requires at least: 4.7
-Tested up to: 5.1.1
-Stable tag: 1.0.4
+Tested up to: 5.2.1
+Stable tag: 1.0.5
 License: Apache 2
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -29,8 +29,8 @@ Therefore, it is necessary that you install the this plugin as well.
 * PHP version 5.6 or greater
 * WordPress 4.4 or greater
 * WooCommerce 3.0.0 or greater
-* wallee Woocommerce Plugin 1.2 or later
-* Woocommerce Subscriptions Plugin 2.2 or later
+* wallee Woocommerce Plugin 1.2.4 or later
+* Woocommerce Subscriptions Plugin 2.5 or later
 
 = Automatic installation =
 
@@ -49,6 +49,6 @@ Therefore, it is necessary that you install the this plugin as well.
 
 == Changelog ==
 
-= 1.0.4 - April 01, 2019 =
+= 1.0.5 - June 05, 2019 =
 
-* Tweak - Handling of customer returning to shop, after offsite method change
+* Dev - Added filters to modify transaction
