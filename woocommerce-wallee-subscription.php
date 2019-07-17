@@ -3,15 +3,15 @@
  * Plugin Name: WooCommerce wallee Subscription
  * Plugin URI: https://wordpress.org/plugins/woo-wallee-subscription
  * Description: Addon to processs WooCommerce Subscriptions with wallee
- * Version: 1.0.5
+ * Version: 1.0.6
  * License: Apache2
  * License URI: http://www.apache.org/licenses/LICENSE-2.0
  * Author: customweb GmbH
  * Author URI: https://www.customweb.com
  * Requires at least: 4.7
- * Tested up to: 5.2.1
+ * Tested up to: 5.2.2
  * WC requires at least: 3.0.0
- * WC tested up to: 3.6.4
+ * WC tested up to: 3.6.5
  *
  * Text Domain: woo-wallee-subscription
  * Domain Path: /languages/
@@ -36,7 +36,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
          *
          * @var string
          */
-        private $version = '1.0.5';
+        private $version = '1.0.6';
 
         /**
          * The single instance of the class.

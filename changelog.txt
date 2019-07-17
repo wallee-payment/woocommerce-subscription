@@ -22,3 +22,7 @@
 
 * Dev - Added filters to modify transaction
 
+= 1.0.6 - July 17, 2019 =
+
+* Tweak - Removed unused meta data
+

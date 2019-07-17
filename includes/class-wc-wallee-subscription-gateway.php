@@ -71,16 +71,15 @@ class WC_Wallee_Subscription_Gateway {
                 return;
             }
             $transaction_service->update_transaction_by_renewal_order($order, $amount_to_charge, $token_id, $existing_transaction);
-            $transaction = $transaction_service->process_transaction_without_user_interaction($existing_transaction->getLinkedSpaceId(), $existing_transaction->getId());
+            $transaction_service->process_transaction_without_user_interaction($existing_transaction->getLinkedSpaceId(), $existing_transaction->getId());
         }
         else{
             $create_transaction = $transaction_service->create_transaction_by_renewal_order($order, $amount_to_charge, $token_id);
             $transaction_service->update_transaction_info($create_transaction, $order);
-            $transaction = $transaction_service->process_transaction_without_user_interaction($token_space_id, $create_transaction->getId());
+            $transaction_service->process_transaction_without_user_interaction($token_space_id, $create_transaction->getId());
         }
         
         $order->add_meta_data('_wallee_gateway_id', $this->gateway->id, true);
-        $order->add_meta_data('_wallee_linked_ids', array('sapce_id' =>  $transaction->getLinkedSpaceId(), 'transaction_id' => $transaction->getId()), false);
         $order->delete_meta_data('_wc_wallee_restocked');
         }
         catch(Exception $e){
