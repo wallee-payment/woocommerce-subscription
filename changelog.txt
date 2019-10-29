@@ -26,3 +26,7 @@
 
 * Tweak - Removed unused meta data
 
+= 1.0.7 - October 29, 2019 =
+
+* Dev - Updated supported plugin versions
+

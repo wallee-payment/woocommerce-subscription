@@ -84,7 +84,7 @@ class WC_Wallee_Subscription_Gateway {
         }
         catch(Exception $e){
             $order->update_status('failed', $e->getMessage() ,'woo-wallee-subscription');
-            WooCommerce_Wallee_Subscription::instance()->log($e->getMessage().$e->getTraceAsString());
+            WooCommerce_Wallee_Subscription::instance()->log($e->getMessage()."\n".$e->getTraceAsString());
             return;
         }
     }
