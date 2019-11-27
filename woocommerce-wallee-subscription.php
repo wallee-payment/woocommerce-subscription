@@ -3,15 +3,15 @@
  * Plugin Name: WooCommerce wallee Subscription
  * Plugin URI: https://wordpress.org/plugins/woo-wallee-subscription
  * Description: Addon to processs WooCommerce Subscriptions with wallee
- * Version: 1.0.7
+ * Version: 1.0.8
  * License: Apache2
  * License URI: http://www.apache.org/licenses/LICENSE-2.0
  * Author: customweb GmbH
  * Author URI: https://www.customweb.com
  * Requires at least: 4.7
- * Tested up to: 5.2.4
+ * Tested up to: 5.3.0
  * WC requires at least: 3.0.0
- * WC tested up to: 3.7.1
+ * WC tested up to: 3.8.0
  *
  * Text Domain: woo-wallee-subscription
  * Domain Path: /languages/
@@ -36,7 +36,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
          *
          * @var string
          */
-        private $version = '1.0.7';
+        private $version = '1.0.8';
 
         /**
          * The single instance of the class.
@@ -134,7 +134,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
             $this->define('WC_WALLEE_SUBSCRIPTION_ABSPATH', dirname(__FILE__) . '/');
             $this->define('WC_WALLEE_SUBSCRIPTION_PLUGIN_BASENAME', plugin_basename(__FILE__));
             $this->define('WC_WALLEE_SUBSCRIPTION_VERSION', $this->version);
-            $this->define('WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION', '1.2.4');
+            $this->define('WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION', '1.2.12');
             $this->define('WC_WALLEE_REQUIRED_WC_SUBSCRIPTION_VERSION', '2.5');
         }
 
@@ -382,7 +382,7 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
         public function update_transaction_from_session(\Wallee\Sdk\Model\AbstractTransactionPending $transaction)
         {
             if(WC_Subscriptions_Cart::cart_contains_subscription() ||  wcs_cart_contains_failed_renewal_order_payment()){
-                $transaction->setTokenizationMode(\Wallee\Sdk\Model\TokenizationnMode::FORCE_CREATION_WITH_ONE_CLICK_PAYMENT);
+                $transaction->setTokenizationMode(\Wallee\Sdk\Model\TokenizationMode::FORCE_CREATION_WITH_ONE_CLICK_PAYMENT);
             }
             return $transaction;
         }
@@ -414,10 +414,10 @@ if (! class_exists('WooCommerce_Wallee_Subscription')) {
         public function update_transaction_from_order(\Wallee\Sdk\Model\AbstractTransactionPending $transaction, $order)
         {
             if(wcs_order_contains_subscription($order, array( 'parent', 'resubscribe', 'switch', 'renewal'))){
-                $transaction->setTokenizationMode(\Wallee\Sdk\Model\TokenizationnMode::FORCE_CREATION_WITH_ONE_CLICK_PAYMENT);
+            	$transaction->setTokenizationMode(\Wallee\Sdk\Model\TokenizationMode::FORCE_CREATION_WITH_ONE_CLICK_PAYMENT);
             }
             if(WC_Subscriptions_Change_Payment_Gateway::$is_request_to_change_payment){
-                $transaction->setTokenizationMode(\Wallee\Sdk\Model\TokenizationnMode::FORCE_CREATION_WITH_ONE_CLICK_PAYMENT);
+                $transaction->setTokenizationMode(\Wallee\Sdk\Model\TokenizationMode::FORCE_CREATION_WITH_ONE_CLICK_PAYMENT);
             }
             return $transaction;
         }

@@ -30,3 +30,7 @@
 
 * Dev - Updated supported plugin versions
 
+= 1.0.8 - November 20, 2019 =
+
+* Dev - Updated to latest SDK and updated plugin versions.
+
