@@ -34,3 +34,7 @@
 
 * Dev - Updated to latest SDK and updated plugin versions.
 
+= 1.0.9 - June 18, 2020 =
+
+* Tested plugin against wordpress version 5.7.2 and woocommerce 5.3.0
+
