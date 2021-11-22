@@ -15,86 +15,86 @@ msgstr ""
 
 #: woocommerce-wallee-subscription.php:395
 msgid "Payment Method Change"
-msgstr ""
+msgstr "Änderung der Zahlungsmethode"
 
 #: includes/class-wc-wallee-subscription-migration.php:83
 #, php-format
 msgid "Woocommerce wallee %s+ has to be active."
-msgstr ""
+msgstr "Woocommerce wallee %s+ muss aktiv sein."
 
 #: includes/class-wc-wallee-subscription-migration.php:89
 #, php-format
 msgid "Woocommerce wallee %s+ is required. (You're running version %s)"
-msgstr ""
+msgstr "Woocommerce wallee %s+ ist erforderlich. (Sie verwenden die Version %s)"
 
 #: includes/class-wc-wallee-subscription-migration.php:94
 #, php-format
 msgid "Woocommerce Subscriptions %s+ has to be active."
-msgstr ""
+msgstr "Woocommerce Subscriptions %s+ müssen aktiv sein."
 
 #: includes/class-wc-wallee-subscription-migration.php:100
 #, php-format
 msgid "Woocommerce Subscriptions %s+ is required. (You're running version %s)"
-msgstr ""
+msgstr "Woocommerce Subscriptions %s+ ist erforderlich. (Sie verwenden die Version %s)"
 
 #: includes/class-wc-wallee-subscription-migration.php:105
 msgid "Could not activate plugin WooCommerce wallee Subscription"
-msgstr ""
+msgstr "Das Plugin WooCommerce wallee Subscription konnte nicht aktiviert werden"
 
 #: includes/class-wc-wallee-subscription-migration.php:107
 msgid "Please check the following requirements before activating:"
-msgstr ""
+msgstr "Bitte prüfen Sie vor der Aktivierung die folgenden Voraussetzungen:"
 
 #: includes/class-wc-wallee-subscription-gateway.php:58
 msgid "The token space and the configured space are not equal."
-msgstr ""
+msgstr "Der Tokenraum und der konfigurierte Raum sind nicht gleich."
 
 #: includes/class-wc-wallee-subscription-gateway.php:62
 msgid "There is no token associated with this subscription."
-msgstr ""
+msgstr "Diesem Abonnement ist kein Token zugeordnet."
 
 #: includes/class-wc-wallee-subscription-gateway.php:152
 msgid "The wallee Space Id value is required."
-msgstr ""
+msgstr "Der Wert wallee Space Id ist erforderlich."
 
 #: includes/class-wc-wallee-subscription-gateway.php:155
 msgid ""
 "The wallee Space Id needs to be in the same space as configured in the main "
 "configuration."
-msgstr ""
+msgstr "Die wallee Space Id muss in demselben Space liegen, der in der Hauptkonfiguration konfiguriert wurde."
 
 #: includes/class-wc-wallee-subscription-gateway.php:158
 msgid "The wallee Token Id value is required."
-msgstr ""
+msgstr "Der Wert wallee Token Id ist erforderlich."
 
 #: views/admin-notices/migration-failed.php:15
 msgid ""
 "There was an issue executing the migration for WooCommerce wallee "
 "Subscription."
-msgstr ""
+msgstr "Es gab ein Problem bei der Ausführung der Migration für WooCommerce wallee Subscription."
 
 #: views/admin-notices/plugin-deactivated.php:14
 msgid ""
 "WooCommerce wallee Subscription deactivated because one of its dependencies "
 "is no longer active."
-msgstr ""
+msgstr "WooCommerce wallee Subscription deaktiviert, da eine der Abhängigkeiten nicht mehr aktiv ist."
 
 #. Name of the plugin
 msgid "WooCommerce wallee Subscription"
-msgstr ""
+msgstr "WooCommerce wallee Subscription"
 
 #. Description of the plugin
 msgid "Addon to processs WooCommerce Subscriptions with wallee"
-msgstr ""
+msgstr "Addon zur Verarbeitung von WooCommerce Subscriptions mit wallee"
 
 #. URI of the plugin
 msgid "https://wordpress.org/plugins/woo-wallee-subscription"
-msgstr ""
+msgstr "https://wordpress.org/plugins/woo-wallee-subscription"
 
 #. Author of the plugin
 msgid "customweb GmbH"
-msgstr ""
+msgstr "customweb GmbH"
 
 #. Author URI of the plugin
 msgid "https://www.customweb.com"
-msgstr ""
+msgstr "https://www.customweb.com"
