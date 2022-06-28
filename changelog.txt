@@ -10,6 +10,8 @@
 
 * add german translations
 
+improve links on readme
+
 = 1.0.2 - March 19, 2019 =
 
 * Fix - WooCommerce Subscription > 2.5.0

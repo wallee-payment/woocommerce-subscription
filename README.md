@@ -3,7 +3,7 @@
 # Wallee Woocommerce Subscriptions
 This repository contains the wallee WooCommerce Subscriptions addon that enables WooCommerce Subscriptions to be processed with [wallee](https://www.wallee.com).
 
-##### To use this extension, a [wallee](https://www.wallee.com) account is required.
+##### To use this extension, a [wallee](https://app-wallee.com/user/signup) account is required.
 
 ## Requirements
 
@@ -15,5 +15,5 @@ This repository contains the wallee WooCommerce Subscriptions addon that enables
 
 ## License
 
-Please see the [license file](https://github.com/wallee-payment/woocommerce-subscription/blob/1.0.10/LICENSE) for more information.
+Please see the [license file](https://github.com/wallee-payment/woocommerce-subscription/blob/1.0.11/LICENSE) for more information.
 
