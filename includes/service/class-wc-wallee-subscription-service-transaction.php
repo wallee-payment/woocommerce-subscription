@@ -20,7 +20,10 @@ class WC_Wallee_Subscription_Service_Transaction extends WC_Wallee_Service_Trans
 	    $space_id = get_option(WooCommerce_Wallee::CK_SPACE_ID);
 	    $create_transaction = new \Wallee\Sdk\Model\TransactionCreate();
 	    $create_transaction->setCustomersPresence(\Wallee\Sdk\Model\CustomersPresence::VIRTUAL_PRESENT);
-	    $create_transaction->setSpaceViewId(get_option(WooCommerce_Wallee::CK_SPACE_VIEW_ID));
+		$space_view_id = get_option(WooCommerce_Wallee::CK_SPACE_VIEW_ID);
+		if (is_numeric($space_view_id)) {
+			$create_transaction->setSpaceViewId($space_view_id);
+		}
 	    $create_transaction->setToken($token_id);
 	    $this->assemble_order_transaction_data($order, $create_transaction);
 	    $this->set_modified_order_line_items($order, $order_total, $create_transaction);

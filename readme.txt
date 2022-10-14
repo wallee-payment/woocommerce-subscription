@@ -3,7 +3,7 @@ Contributors: customwebgmbh
 Tags: woocommerce wallee, woocommerce, wallee, payment, e-commerce, webshop, psp, subscription, recurring payment, processing
 Requires at least: 4.7
 Tested up to: 5.7.2
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: Apache 2
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -49,4 +49,4 @@ Therefore, it is necessary that you install the this plugin as well.
 
 == Changelog ==
 
-readme updates
+Bug fix, if space_view_id is not set, it does not send it to the service portal.
