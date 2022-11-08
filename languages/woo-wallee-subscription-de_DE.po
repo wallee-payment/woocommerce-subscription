@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce wallee Subscription\n"
+"Project-Id-Version: wallee Subscription\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-28 10:15+0100\n"
 "PO-Revision-Date: 2019-03-28 10:15+0100\n"
@@ -18,13 +18,13 @@ msgstr "Zahlmethodenwechsel"
 
 #: includes/class-wc-wallee-subscription-migration.php:83
 #, php-format
-msgid "Woocommerce wallee %s+ has to be active."
-msgstr "Woocommerce wallee %s+ muss aktiviert sein."
+msgid "wallee %s+ has to be active."
+msgstr "wallee %s+ muss aktiviert sein."
 
 #: includes/class-wc-wallee-subscription-migration.php:89
 #, php-format
-msgid "Woocommerce wallee %s+ is required. (You're running version %s)"
-msgstr "Woocommerce wallee %s+ wird benötigt. (Du verwendest Version %s)"
+msgid "wallee %s+ is required. (You're running version %s)"
+msgstr "wallee %s+ wird benötigt. (Du verwendest Version %s)"
 
 #: includes/class-wc-wallee-subscription-migration.php:94
 #, php-format
@@ -38,9 +38,9 @@ msgstr ""
 "Woocommerce Subscriptions %s+ wird benötigt. (Du verwendest Version %s)"
 
 #: includes/class-wc-wallee-subscription-migration.php:105
-msgid "Could not activate plugin WooCommerce wallee Subscription"
+msgid "Could not activate plugin wallee Subscription"
 msgstr ""
-"Das Plugin WooCommerce wallee Subscription konnte nicht aktiviert "
+"Das Plugin wallee Subscription konnte nicht aktiviert "
 "werden."
 
 #: includes/class-wc-wallee-subscription-migration.php:107
@@ -73,26 +73,26 @@ msgstr "Die wallee Token Id wird benötigt."
 
 #: views/admin-notices/migration-failed.php:15
 msgid ""
-"There was an issue executing the migration for WooCommerce wallee "
+"There was an issue executing the migration for wallee "
 "Subscription."
 msgstr ""
-"Es gab ein Problem bei der Ausführung der Migration für WooCommerce wallee "
+"Es gab ein Problem bei der Ausführung der Migration für wallee "
 "Subscription"
 
 #: views/admin-notices/plugin-deactivated.php:14
 msgid ""
-"WooCommerce wallee Subscription deactivated because one of its dependencies "
+"wallee Subscription deactivated because one of its dependencies "
 "is no longer active."
 msgstr ""
-"WooCommerce wallee Subscription wurde deaktiviert, da mindestens eine "
+"wallee Subscription wurde deaktiviert, da mindestens eine "
 "Abghänigkeit nicht mehr aktiv ist."
 
 #. Name of the plugin
-msgid "WooCommerce wallee Subscription"
-msgstr "WooCommerce wallee Subscription"
+msgid "wallee Subscription"
+msgstr "wallee Subscription"
 
 #. Description of the plugin
-msgid "Addon to processs WooCommerce Subscriptions with wallee"
+msgid "Addon to process WooCommerce Subscriptions with wallee"
 msgstr ""
 "Diese Erweiterung erlabut das Verarbeiten von WooCommerce Subcriptions mit "
 "wallee"

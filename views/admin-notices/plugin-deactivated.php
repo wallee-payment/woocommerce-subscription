@@ -1,14 +1,20 @@
-<?php 
-if (!defined('ABSPATH')) {
+<?php
+/**
+ *
+ * Plugin Deactivated View
+ *
+ * Wallee
+ * This plugin will add support for process WooCommerce Subscriptions with wallee
+ *
+ * @category View
+ * @package  Wallee
+ * @author   wallee AG (http://www.wallee.com/)
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Software License (ASL 2.0)
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
 ?>
-/**
- * wallee WooCommerce
- *
- * This WooCommerce plugin enables to process payments with wallee (https://www.wallee.com).
- *
- * @author customweb GmbH (http://www.customweb.com/)
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache Software License (ASL 2.0)
- */
-<div class="error"><p><?php _e('WooCommerce wallee Subscription deactivated because one of its dependencies is no longer active.', 'woo-wallee-subscription'); ?></p></div>
+
+<div class="error"><p><?php esc_html_e( 'wallee Subscription deactivated because one of its dependencies is no longer active.', 'woo-wallee-subscription' ); ?></p></div>

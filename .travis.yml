@@ -3,16 +3,24 @@ language: generic
 before_deploy:
   - if ! [ "$BEFORE_DEPLOY_RUN" ]; then
       export BEFORE_DEPLOY_RUN=1;
+      git clone https://github.com/squizlabs/PHP_CodeSniffer.git phpcs;
+      git clone -b master https://github.com/WordPress/WordPress-Coding-Standards.git wpcs;
+      cd phpcs;
+      ./bin/phpcs --config-set installed_paths ../wpcs;
+      cd ../;
       mkdir build;
       mkdir build/src;
-      rsync -r --exclude 'build' --exclude '.git' --exclude '.travis.yml' --exclude 'README.md' . build/src;
+      rsync -r --exclude 'build'  --exclude 'wpcs' --exclude 'phpcs' --exclude '.git' --exclude '.travis.yml' --exclude 'README.md' . build/src;
       perl -plne 'print "$ENV{'FEATURES'}" if(/== Installation ==/); print "$ENV{'FAQ_ENTRIES'}" if(/== Changelog ==/);' build/src/readme.txt > build/src/readme_mod.txt;
       rm build/src/readme.txt;
       mv build/src/readme_mod.txt build/src/readme.txt;
       mkdir build/$WORDPRESS_ORG_SLUG;
       rsync -r build/src/ build/$WORDPRESS_ORG_SLUG/;
+      rm -rf build/src/docs
       cd build;
       zip -r $TRAVIS_BUILD_DIR/$WORDPRESS_ORG_SLUG.zip $WORDPRESS_ORG_SLUG;
+      ../phpcs/bin/phpcbf -n --standard=WordPress src/ || true;
+      ../phpcs/bin/phpcs -n --standard=WordPress src/ || true;
       cd ..;
     fi  
  

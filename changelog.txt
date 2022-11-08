@@ -50,3 +50,19 @@ Bug fix, if space_view_id is not set, it does not send it to the service portal.
 
 * Tested plugin against wordpress version 5.7.2 and woocommerce 5.3.0
 
+## Features:
+- Support of Wordpress 6.1
+- Support of Woocommerce 7.0.1
+
+## Bugfixes:
+- Tested up to latest WP and WC versions.
+- Security fixes for sanitation, escaping and validation.
+- PHPCS and trademark fixes.
+- Removed unnecessary documentation files, as they are available online.
+- Removed calls to remote files for deprecated features.
+
+## Tested against:
+- PHP 7.4.32
+- Wordpress: 6.1
+- Woocommerce: 6.7.0
+
