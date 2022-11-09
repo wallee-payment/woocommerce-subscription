@@ -66,3 +66,11 @@ Bug fix, if space_view_id is not set, it does not send it to the service portal.
 - Wordpress: 6.1
 - Woocommerce: 6.7.0
 
+## Bugfixes:
+- Travis file fix, no changes made to the plugin codebase
+
+## Tested against:
+- PHP 7.4.32
+- Wordpress: 6.1
+- Woocommerce: 6.7.0
+
