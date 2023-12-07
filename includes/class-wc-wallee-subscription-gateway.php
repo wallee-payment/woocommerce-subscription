@@ -216,6 +216,7 @@ class WC_Wallee_Subscription_Gateway {
 	 * @return mixed|void
 	 */
 	public function create_json_response( $location, $status ) {
+		$location = basename($location);
 		if ( 'wc_wallee_subscription_redirect' == $location && isset( $GLOBALS['_wc_wallee_subscription_gateway_result'] ) ) {
 			wp_send_json( $GLOBALS['_wc_wallee_subscription_gateway_result'] );
 			exit;

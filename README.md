@@ -15,5 +15,5 @@ This repository contains the wallee Subscriptions addon that enables WooCommerce
 
 ## License
 
-Please see the [license file](https://github.com/wallee-payment/woocommerce-subscription/blob/1.1.2/LICENSE) for more information.
+Please see the [license file](https://github.com/wallee-payment/woocommerce-subscription/blob/1.1.3/LICENSE) for more information.
 

@@ -29,6 +29,8 @@ class WC_Wallee_Subscription_Service_Transaction extends WC_Wallee_Service_Trans
 	 * @param int      $token_id    Token id.
 	 *
 	 * @return \Wallee\Sdk\Model\Transaction
+	 * @throws Exception
+	 * 	 If the transaction being created is not valid.
 	 */
 	public function create_transaction_by_renewal_order( WC_Order $order, $order_total, $token_id ) {
 		$space_id = get_option( WooCommerce_Wallee::CK_SPACE_ID );
@@ -43,6 +45,9 @@ class WC_Wallee_Subscription_Service_Transaction extends WC_Wallee_Service_Trans
 		$this->set_modified_order_line_items( $order, $order_total, $create_transaction );
 
 		$create_transaction = apply_filters( 'wc_wallee_subscription_create_transaction', $create_transaction, $order );
+		if (!$create_transaction->valid()) {
+			throw new Exception("The transaction you are trying to create is not valid.");
+		}
 		$transaction = $this->get_transaction_service()->create( $space_id, $create_transaction );
 		$this->update_transaction_info( $transaction, $order );
 		return $transaction;
