@@ -79,8 +79,10 @@ class WC_Wallee_Subscription_Admin {
 	 * @return void
 	 */
 	public function handle_modules_active() {
+		// Gets the plugin's base full name.
+		$plugin_base_name = WC_Wallee_Subscription_Migration::get_base_plugin_name();
 		// Subscription plugin or base plugin not activated.
-		if ( ! is_plugin_active( 'woocommerce-subscriptions/woocommerce-subscriptions.php' ) || ! is_plugin_active( 'woo-wallee/woocommerce-wallee.php' ) ) {
+		if ( ! is_plugin_active( 'woocommerce-subscriptions/woocommerce-subscriptions.php' ) || ! is_plugin_active( $plugin_base_name ) ) {
 			// Deactivate plugin.
 			deactivate_plugins( WC_WALLEE_SUBSCRIPTION_PLUGIN_BASENAME );
 			add_action(

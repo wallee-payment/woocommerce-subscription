@@ -99,11 +99,14 @@ class WC_Wallee_Subscription_Migration {
 
 		$errors = array();
 
-		if ( ! is_plugin_active( 'woo-wallee/woocommerce-wallee.php' ) ) {
+		// Get the full name of the base plugin, which is a dependency.
+		$plugin_base_name = self::get_base_plugin_name();
+
+		if ( ! is_plugin_active( $plugin_base_name ) ) {
 				/* translators: %s is replaced with "string" */
 			$errors[] = sprintf( __( 'wallee %s+ has to be active.', 'woo-wallee-subscription' ), WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION );
 		} else {
-			$base_module_data = get_plugin_data( WP_PLUGIN_DIR . '/woo-wallee/woocommerce-wallee.php', false, false );
+			$base_module_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_base_name, false, false );
 
 			if ( version_compare( $base_module_data['Version'], WC_WALLEE_SUBSCRIPTION_REQUIRED_WALLEE_VERSION, '<' ) ) {
 					/* translators: %s is replaced with "string" */
@@ -212,6 +215,30 @@ class WC_Wallee_Subscription_Migration {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Returns the full name of the base plugin, as installed in the system.
+	 * This is needed because the full name can be different if installed from a zip file.
+	 *
+	 * @return string
+	 */
+	public static function get_base_plugin_name() {
+		static $base_name;
+
+		if (!empty($base_name)) {
+			return $base_name;
+		}
+
+		$plugins = array_keys(get_plugins());
+		foreach ($plugins as $plugin) {
+			if (substr_count($plugin, 'woocommerce-wallee.php')) {
+				$base_name = $plugin;
+				break;
+			}
+		}
+
+		return $base_name;
 	}
 }
 
