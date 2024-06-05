@@ -80,3 +80,10 @@ Bug fix, if space_view_id is not set, it does not send it to the service portal.
 = 1.1.4 - March 19, 2024 =
 - [BugFix] Improved dependency detection: The plugin can now identify the base plugin even if the exact name varies slightly.
 
+= 1.1.5 - Jun 3 2024 =
+- [Feature] Added compatibilities with WordPress 6.5.3 and the new WooCommerce version 8.9.1
+- [Tested Against] PHP 8.0
+- [Tested Against] Wordpress 6.5.3
+- [Tested Against] WooCommerce 8.9.1
+- [Tested Against] Woo Subscriptions 5.5.0
+
