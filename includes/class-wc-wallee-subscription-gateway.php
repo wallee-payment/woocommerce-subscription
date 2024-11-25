@@ -101,7 +101,7 @@ class WC_Wallee_Subscription_Gateway {
 			$token_space_id = get_post_meta( $order->get_id(), '_wallee_subscription_space_id', true );
 			$token_id = get_post_meta( $order->get_id(), '_wallee_subscription_token_id', true );
 
-			if ( empty( $token_space_id ) || get_option( WooCommerce_Wallee::CK_SPACE_ID ) != $token_space_id ) {
+			if ( empty( $token_space_id ) || get_option( WooCommerce_Wallee::WALLEE_CK_SPACE_ID ) != $token_space_id ) {
 				$order->update_status( 'failed', __( 'The token space and the configured space are not equal.', 'woo-wallee-subscription' ) );
 				return;
 			}
@@ -261,7 +261,7 @@ class WC_Wallee_Subscription_Gateway {
 		if ( $this->gateway->id === $payment_method_id ) {
 			if ( ! isset( $payment_meta['post_meta']['_wallee_subscription_space_id']['value'] ) || empty( $payment_meta['post_meta']['_wallee_subscription_space_id']['value'] ) ) {
 				throw new Exception( __( 'The wallee Space Id value is required.', 'woo-wallee-subscription' ) );
-			} elseif ( get_option( WooCommerce_Wallee::CK_SPACE_ID ) != $payment_meta['post_meta']['_wallee_subscription_space_id']['value'] ) {
+			} elseif ( get_option( WooCommerce_Wallee::WALLEE_CK_SPACE_ID ) != $payment_meta['post_meta']['_wallee_subscription_space_id']['value'] ) {
 				throw new Exception( __( 'The wallee Space Id needs to be in the same space as configured in the main configuration.', 'woo-wallee-subscription' ) );
 			}
 			if ( ! isset( $payment_meta['post_meta']['_wallee_subscription_token_id']['value'] ) || empty( $payment_meta['post_meta']['_wallee_subscription_token_id']['value'] ) ) {

@@ -33,10 +33,10 @@ class WC_Wallee_Subscription_Service_Transaction extends WC_Wallee_Service_Trans
 	 * 	 If the transaction being created is not valid.
 	 */
 	public function create_transaction_by_renewal_order( WC_Order $order, $order_total, $token_id ) {
-		$space_id = get_option( WooCommerce_Wallee::CK_SPACE_ID );
+		$space_id = get_option( WooCommerce_Wallee::WALLEE_CK_SPACE_ID );
 		$create_transaction = new \Wallee\Sdk\Model\TransactionCreate();
 		$create_transaction->setCustomersPresence( \Wallee\Sdk\Model\CustomersPresence::VIRTUAL_PRESENT );
-		$space_view_id = get_option( WooCommerce_Wallee::CK_SPACE_VIEW_ID );
+		$space_view_id = get_option( WooCommerce_Wallee::WALLEE_CK_SPACE_VIEW_ID );
 		if ( is_numeric( $space_view_id ) ) {
 			$create_transaction->setSpaceViewId( $space_view_id );
 		}
