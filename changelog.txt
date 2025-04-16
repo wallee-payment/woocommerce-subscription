@@ -87,3 +87,12 @@ Bug fix, if space_view_id is not set, it does not send it to the service portal.
 - [Tested Against] WooCommerce 8.9.1
 - [Tested Against] Woo Subscriptions 5.5.0
 
+= 1.1.6 - Mar 6 2025 =
+- [BugFix] Fixed usage of newly introduced constants on version 3.2.0
+- [BugFix] Improved subscription handling: Optimized the processing of subscription data for better reliability and performance.
+
+- [Tested Against] PHP 8.2
+- [Tested Against] Wordpress 6.8.0
+- [Tested Against] WooCommerce 9.8.0
+- [Tested Against] Woo Subscriptions 7.2.1
+
