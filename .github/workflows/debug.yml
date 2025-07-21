@@ -1,18 +1,29 @@
-name: Runner Permissions Check
+name: Plugin debug
 on:
   workflow_dispatch:
 
 jobs:
-  check_permissions:
+  tag:
     runs-on: ubuntu-latest
     steps:
-      - name: Show workspace permissions
+      - name: Test create and delete SVN tag directory
         run: |
-          echo "Current user:"
-          whoami
-          echo "Workspace directory info:"
-          ls -ld $GITHUB_WORKSPACE
-          echo "Try creating test folder:"
-          mkdir test-folder && echo "mkdir success" || echo "mkdir failed"
-          echo "List after mkdir:"
-          ls -ld test-folder
+          TAG="test-tag-$(date +%s)"
+          echo "Trying to create SVN tag directory: $TAG"
+          svn mkdir "https://plugins.svn.wordpress.org/${{ vars.WORDPRESS_ORG_SLUG }}/tags/$TAG" \
+            --username "${{ secrets.SVN_USERNAME }}" \
+            --password "${{ secrets.SVN_PASSWORD }}" \
+            --non-interactive \
+            --trust-server-cert \
+            -m "Test tag creation"
+
+          echo "Trying to delete SVN tag directory: $TAG"
+          svn delete "https://plugins.svn.wordpress.org/${{ vars.WORDPRESS_ORG_SLUG }}/tags/$TAG" \
+            --username "${{ secrets.SVN_USERNAME }}" \
+            --password "${{ secrets.SVN_PASSWORD }}" \
+            --non-interactive \
+            --trust-server-cert \
+            -m "Remove test tag"
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
