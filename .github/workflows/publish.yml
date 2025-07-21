@@ -1,6 +1,10 @@
 name: Release Plugin
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to deploy'
+        required: true
 
 jobs:
   tag:
@@ -57,7 +61,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ vars.WORDPRESS_ORG_SLUG }}.zip
           asset_name: ${{ vars.WORDPRESS_ORG_SLUG }}
-          tag: 'refs/tags/1.1.7'
+          tag: ${{ github.ref }}
           overwrite: true
 
       - name: WordPress Plugin Deploy
