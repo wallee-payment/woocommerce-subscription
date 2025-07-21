@@ -57,7 +57,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ vars.WORDPRESS_ORG_SLUG }}.zip
           asset_name: ${{ vars.WORDPRESS_ORG_SLUG }}
-          tag: 1.1.7
+          tag: 'refs/tags/1.1.7'
 
       - name: WordPress Plugin Deploy
         id: deploy
