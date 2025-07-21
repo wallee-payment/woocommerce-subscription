@@ -1,9 +1,18 @@
-name: Debug Runner
+name: Runner Permissions Check
 on:
   workflow_dispatch:
 
 jobs:
-  debug:
+  check_permissions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Runner is working ✅"
+      - name: Show workspace permissions
+        run: |
+          echo "Current user:"
+          whoami
+          echo "Workspace directory info:"
+          ls -ld $GITHUB_WORKSPACE
+          echo "Try creating test folder:"
+          mkdir test-folder && echo "mkdir success" || echo "mkdir failed"
+          echo "List after mkdir:"
+          ls -ld test-folder
