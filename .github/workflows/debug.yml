@@ -1,0 +1,9 @@
+name: Debug Runner
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Runner is working ✅"
