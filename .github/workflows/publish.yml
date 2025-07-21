@@ -1,10 +1,8 @@
 name: Release Plugin
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to deploy'
-        required: true
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   tag:
@@ -62,7 +60,6 @@ jobs:
           file: ${{ vars.WORDPRESS_ORG_SLUG }}.zip
           asset_name: ${{ vars.WORDPRESS_ORG_SLUG }}
           tag: ${{ github.ref }}
-          overwrite: true
 
       - name: WordPress Plugin Deploy
         id: deploy
@@ -76,4 +73,3 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           ASSETS_DIR: ${{ vars.WORDPRESS_ORG_SLUG }}/build-woo/src
           SLUG: ${{ vars.WORDPRESS_ORG_SLUG }}
-          VERSION: ${{ github.event.inputs.tag }}
