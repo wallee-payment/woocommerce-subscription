@@ -95,7 +95,7 @@ class WC_Wallee_Subscription_Service_Transaction extends WC_Wallee_Service_Trans
 	 */
 	protected function set_modified_order_line_items( WC_Order $order, $order_total, \Wallee\Sdk\Model\AbstractTransactionPending $transaction ) {
 		$raw_items = WC_Wallee_Service_Line_Item::instance()->get_raw_items_from_order( $order );
-		$cleaned = WC_Wallee_Helper::instance()->cleanup_line_items( $raw_items, $order_total, $order->get_currency() );
+		$cleaned = WC_Wallee_Helper::instance()->cleanup_line_items( $raw_items, $order_total, $order->get_currency(), true );
 		$transaction->setLineItems( $cleaned );
 
 	}

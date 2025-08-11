@@ -104,3 +104,11 @@ Bug fix, if space_view_id is not set, it does not send it to the service portal.
 - [Tested Against] WooCommerce 9.8.0
 - [Tested Against] Woo Subscriptions 7.2.1
 
+= 1.1.8 - August 11 2025 =
+- [Bugfix] Fixed issue with 0 value transactions subscriptions; payment methods not appearing and wrong status
+
+- [Tested Against] PHP 8.2
+- [Tested Against] Wordpress 6.8.2
+- [Tested Against] WooCommerce 10.0.3
+- [Tested Against] Woo Subscriptions 7.2.1
+

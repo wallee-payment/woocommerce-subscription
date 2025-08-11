@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/wallee-payment/woocommerce-subscription.svg?branch=master)](https://travis-ci.org/wallee-payment/woocommerce-subscription)
-
 # wallee Subscriptions
 This repository contains the wallee Subscriptions addon that enables WooCommerce Subscriptions to be processed with [wallee](https://www.wallee.com).
 
@@ -7,7 +5,7 @@ This repository contains the wallee Subscriptions addon that enables WooCommerce
 
 ## Documentation
 
-* [Documentation](https://plugin-documentation.wallee.com/wallee-payment/woocommerce-subscription/1.1.7/docs/en/documentation.html)
+* [Documentation](https://plugin-documentation.wallee.com/wallee-payment/woocommerce-subscription/1.1.8/docs/en/documentation.html)
 
 ## Requirements
 
@@ -19,5 +17,5 @@ This repository contains the wallee Subscriptions addon that enables WooCommerce
 
 ## License
 
-Please see the [license file](https://github.com/wallee-payment/woocommerce-subscription/blob/1.1.7/LICENSE) for more information.
+Please see the [license file](https://github.com/wallee-payment/woocommerce-subscription/blob/1.1.8/LICENSE) for more information.
 
